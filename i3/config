@@ -15,15 +15,15 @@ set $mod Mod4
 exec --no-startup-id xrandr --output Virtual-1 --mode 1920x1080 
 exec_always --no-startup-id polybar-msg cmd quit
 exec_always --no-startup-id polybar
-exec_always feh --bg-fill ~/Imágenes/wallpaper/wallpaper.jpg
+exec_always feh --bg-fill ../images/wallpaper.jpg
 
 
 # Atajos
 
 bindsym $mod+Shift+f exec firefox
-bindsym $mod+Shift+b exec ~/.config/i3/launch_i3lock.sh # Launch a own script of i3lock
-bindsym $mod+d exec ~/.config/rofi/launcher.sh
-bindsym $mod+Shift+s exec ~/.config/rofi/system_menu.sh
+bindsym $mod+Shift+b exec ./launch_i3lock.sh # Launch a own script of i3lock
+bindsym $mod+d exec ../rofi/launcher.sh
+bindsym $mod+Shift+s exec ../rofi/system_menu.sh
 # i3-gaps
 
 gaps inner 5
