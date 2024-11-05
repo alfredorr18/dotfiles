@@ -1,25 +1,28 @@
 #!/bin/bash
 
-OPTIONS=" Apagar\n Reiniciar\n Suspender\n Cerrar Sesión\n Bloquear"
+OPTIONS="Apagar\nReiniciar\nSuspender\nCerrar Sesión\nHibernar\nBloquear"
 
 
-CHOICE=$(echo -e $OPTIONS | rofi -dmenu -theme ../../rofi/config.rasi -p "Selecciona una opcion")
+CHOICE=$(echo -e $OPTIONS | rofi -dmenu -theme ~/.config/rofi/config.rasi -p "Selecciona una opcion")
 
 case "$CHOICE" in 
-  " Apagar")
+  "Apagar")
     systemctl poweroff
     ;;
-  " Reiniciar")
+  "Reiniciar")
     systemctl reboot
     ;;
-  " Suspender")
+  "Suspender")
     systemctl suspend 
     ;;
-  " Cerrar Sesión")
+  "Cerrar Sesión")
     systemctl logout
     ;;
-  " Bloquear")
-    ../../i3/launch_i3lock.sh
+  "Hibernar")
+    systemctl hibernate
+    ;;
+  "Bloquear")
+    ~/.config/i3/launch_i3lock.sh
     ;;
 esac
 
