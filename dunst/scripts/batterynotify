@@ -1,0 +1,28 @@
+#!/bin/bash
+
+export DISPLAY=:0
+export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1000/bus"
+
+bateria_baja=25
+desconectada=`acpi -b | grep -c "Discharging"`
+nivel_bateria=`acpi -b | grep -P -o '[0-9]+(?=%)'`
+
+
+
+fichero_bat_baja=/tmp/bateria_baja
+fichero_bat_cargada=/tmp/bateria_cargada
+
+
+if [ $desconectada -eq 1 ] && [ -f $fichero_bat_cargada ];then
+  rm $fichero_bat_cargada
+elif [ $desconectada -eq 0 ] && [ -f $fichero_bat_baja ];then
+  rm $fichero_bat_baja
+fi
+
+if [ $nivel_bateria -eq 100 ] && [ $desconectada -eq 0 ] && [ ! -f $fichero_bat_cargada ];then
+  dunstify "Bateria cargada" -u low -r 6968 -i null  
+  touch $fichero_bat_cargada
+elif [ $nivel_bateria -lt 26 ] && [ $desconectada -eq 1 ] && [ ! -f $fichero_bat_baja ];then
+  dunstify "Bateria baja" -u critical -r 6968 -i null 
+  touch $fichero_bat_baja
+fi

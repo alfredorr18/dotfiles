@@ -1,0 +1,23 @@
+#!/bin/bash
+
+function notificacion(){
+  brillo=$(printf "%.0f\n" $(brillo -G | tr "." " " | awk '{print $1}'))
+  dunstify -a "brillo_noti" -u low -r 6967 -h int:value:"$brillo" -i "brightness-$1" "Brillo: $brillo%" -t 2000
+
+}
+ 
+
+case $1 in
+  subir)
+    brillo -A 10
+    notificacion $1
+    ;;
+  bajar)
+    brillo -U 10
+    notificacion $1
+    ;;
+  estado)
+    notificacion $1
+    ;;
+esac
+

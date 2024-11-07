@@ -1,0 +1,41 @@
+#!/bin/bash
+
+estado=$(nmcli device | grep "^wlan0.*conectado" | awk '{print $3}')
+nombre=$(nmcli device | grep "^wlan0.*conectado" | awk '{print $4}')
+file_velo=/tmp/test_velo_wifi.txt
+
+case $1 in
+  activar)
+    if [ "$estado" == "conectado" ];then
+      dunstify "Wifi" "Ya estas conectado a ${nombre}" -u low -r 6965 -i null
+    elif [ "$estado" == "no disponible" ];then
+      nmcli radio wifi on 
+      dunstify "Wifi" "${conectado} Conectado" -u low -r 6965 -i null
+    fi
+    ;;
+  desactivar)
+    nmcli radio wifi off
+    dunstify "Wifi" "Desconectado" -u critical -r 6965 -i null -t 1000
+    ;;
+  estado)
+    if [ "$estado" == "conectado" ];then
+      dunstify "Wifi" "Conectado a ${nombre}" -u low -r 6965 -i null
+    elif [ "$estado" == "no disponible" ];then
+       
+      dunstify "Wifi" "No Conectado" -u low -r 6965 -i null
+    fi
+    ;;
+  velocidad)
+    speedtest > $file_velo
+    descarga=$(cat $file_velo | grep -i download: | awk '{print $2,$3}')
+    subida=$(cat $file_velo | grep -i upload: | awk '{print $2,$3}')
+    dunstify "Velocidad Wifi" " $descarga   $subida" -u low  -r 6965 -i null 
+    ;;
+esac
+
+
+
+
+
+
+

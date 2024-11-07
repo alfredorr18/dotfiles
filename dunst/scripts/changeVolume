@@ -1,0 +1,47 @@
+#!/bin/bash
+
+
+
+estado_vol_por=$(pamixer --get-volume-human)
+estado_vol=$(pamixer --get-volume)
+
+case $1 in
+  subir)
+    pamixer -u 
+    pamixer -i 5
+    dunstify "Volumen" "$estado_vol_por" -u low -r 6969 -i ~/.config/dunst/icons/subir_vol.svg
+    ;;
+  bajar)
+    pamixer -u 
+    pamixer -d 5 
+    dunstify "Volumen" "$estado_vol_por" -u low -r 6969 -i ~/.config/dunst/icons/bajar_vol.svg
+    ;;
+  mutear)
+    pamixer -t
+    if [ "$estado_vol_por" != "muted" ];then
+      dunstify "Volumen" "Muteado" -u low -r 6969 -i ~/.config/dunst/icons/muteao.svg
+    else
+      if [ $estado_vol -gt 50 ];then
+        dunstify "Volumen" "$estado_vol%" -u low -r 6969 -i ~/.config/dunst/icons/subir_vol.svg
+      else
+        dunstify "Volumen" "$estado_vol%" -u low -r 6969 -i ~/.config/dunst/icons/bajar_vol.svg
+      fi
+    fi
+    ;;
+  estado)
+    if [ $estado_vol -eq 0 ];then
+      dunstify "Volumen" "$estado_vol_por" -u low -r 6969 -i ~/.config/dunst/icons/silencio.svg
+    elif [ $estado_vol -gt 50 ];then
+      dunstify "Volumen" "$estado_vol_por" -u low -r 6969 -i ~/.config/dunst/icons/subir_vol.svg
+    elif [[ $estado_vol -lt 50 && $estado_vol -gt 0 ]];then
+      dunstify "Volumen" "$estado_vol_por" -u low -r 6969 -i ~/.config/dunst/icons/bajar_vol.svg
+    fi
+    ;;
+esac
+    
+
+
+
+        
+
+

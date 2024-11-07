@@ -1,0 +1,27 @@
+#!/bin/bash
+
+estado=$(bluetoothctl info | awk NR==2 | awk '{print substr($0, index($0,$2))}')
+estado_d=$(bluetoothctl info | awk NR==2 | awk '{print substr($0, index($0,$2))}' | awk '{print $1}' | tr "()" " ")
+
+case $1 in
+  conectar)
+    timeout 2 bluetoothctl connect 0C:8D:CA:18:A7:FF
+    if [ "$estado" == "Galaxy Buds2 (A7FF)" ];then
+      dunstify "Bluetooh" "$estado Conectados" -u low -r 6966 -i null
+    else
+      dunstify "Bluetooth" "Dispositivo no conectado" -u critical -r 6966 -i null -t 1000
+    fi 
+    ;;
+  desconectar)
+    bluetoothctl disconnect 0C:8D:CA:18:A7:FF
+    dunstify "Bluetooth" "Dispositivo desconectado" -u low -r 6966 -i null 
+    ;;
+  estado)
+    echo $estado_d
+    if [ "$estado_d" != "Galaxy Buds2 (A7FF)" ];then
+      dunstify "Bluetooth" "No hay ningun dispositivo" -u low -r 6966 -i null
+    else
+      dunstify "Bluetooth" "$estado" -u low -r 6966 -i null
+    fi
+  ;;
+esac
