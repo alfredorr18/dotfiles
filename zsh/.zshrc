@@ -271,9 +271,11 @@ turquoiseColour="\e[0;36m\033[1m"
 grayColour="\e[0;37m\033[1m"
 
 
+
+
 function pinga(){
 	ip=$1
-	ping -c 1 $ip &>/dev/null && echo -e "${greenColour}\n[+] Hay conexion con la maquina con IP: $ip" || echo -e "${redColour}\n[!]No hay conexion con la maquina${endColour}"
+	ping -c 1 $ip &>/dev/null && echo -e "${greenColour}\n[+] Hay conexion con: $ip" || echo -e "${redColour}\n[!]No hay conexion con la maquina${endColour}"
 	
 }
 
@@ -334,6 +336,13 @@ function verColores (){
 	cat /root/.colores
 }
 
+function docx2pdf(){
+
+  documento=$1
+  libreoffice --headless --convert-to pdf $1 && echo -e "${greenColour}[+]${endColour} ${grayColour}Conversion realizada${endColour}" || echo -e "${redColour}[!]${endColour} ${grayColour}Error en la conversion${endColour}"
+  rm $1
+
+}
 
 
 # Aliases
@@ -342,8 +351,9 @@ alias cat='/bin/bat'
 alias bat='/bin/cat'
 alias ls='/bin/lsd'
 alias lsd='/bin/ls'
-alias neo="/bin/neofetch"
+alias neo="/bin/neofetch --kitty --source ~/Imagenes/img2.jpg"
 
 export LS_COLORS="$LS_COLORS:di=38;5;129"
 
-
+export VISUAL=nvim
+export EDITOR=nvim

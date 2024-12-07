@@ -14,7 +14,7 @@ This repository content my personal Linux configurations
 - **Shell**: Zsh
 - **Display tools**: Neofetch
 - **Editor Text**: Nvim
-
+- **Notifications**: Dunst
 
 ## Installation
 

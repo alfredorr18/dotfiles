@@ -12,22 +12,26 @@
 set $mod Mod4
 # Autostart Aplications
 
-exec --no-startup-id xrandr --output Virtual-1 --mode 1920x1080 
-exec_always --no-startup-id polybar-msg cmd quit
-exec_always --no-startup-id polybar
-exec_always feh --bg-fill ../images/wallpaper.jpg
-
-
+exec --no-startup-id xrandr --output eDP-1 --mode 1920x1080 
+exec_always --no-startup-id xrandr --output HDMI-1-0 --auto --right-of eDP-1
+exec_always --no-startup-id pactl set-default-sink alsa_output.pci-0000_01_00.1.hdmi-stereo 
+exec_always --no-startup-id polybar-msg cmd quit 
+exec_always --no-startup-id polybar main
+exec_always --no-startup-id polybar secondary
+exec_always --no-startup-id feh --bg-fill ~/Imagenes/wallpapers/wallpaper.jpg
+exec_always --no-startup-id picom
+exec_always --no-startup-id killall dunst
+exec_always --no-startup-id dunst
 # Atajos
 
-bindsym $mod+Shift+f exec firefox
-bindsym $mod+Shift+b exec ./launch_i3lock.sh # Launch a own script of i3lock
-bindsym $mod+d exec ../rofi/launcher.sh
-bindsym $mod+Shift+s exec ../rofi/system_menu.sh
+bindsym $mod+Shift+b exec ~/.config/i3/launch_i3lock.sh # Launch a own script of i3lock
+bindsym $mod+d exec ~/.config/rofi/launcher.sh
+bindsym $mod+Shift+s exec ~/.config/rofi/system_menu.sh
+bindsym $mod+Shift+a exec ~/.config/rofi/control_menu.sh
 # i3-gaps
 
 gaps inner 5
-gaps outer 0
+gaps outer 3
 
 #Disable TitleBar / Resize TitleBar
 
@@ -74,7 +78,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -83,7 +87,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+Shift+d exec --no-startup-id dmenu_run
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
-# There also is i3-dmenu-desktop which only displays applications shipping a
+# There also is i3-dmenu-desktop~/.confighich only displays applications shipping a
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
@@ -139,6 +143,22 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
+
+set $fm "eDP-1"
+set $sm "HDMI-1-0"
+
+workspace 1 output $fm
+workspace 2 output $fm
+workspace 3 output $fm
+workspace 4 output $fm
+
+workspace 5 output $sm
+workspace 6 output $sm
+workspace 7 output $sm
+workspace 8 output $sm
+workspace 9 output $sm
+
+
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
