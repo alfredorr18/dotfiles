@@ -12,13 +12,13 @@
 set $mod Mod4
 # Autostart Aplications
 
-exec --no-startup-id xrandr --output eDP-1 --mode 1920x1080 
-exec_always --no-startup-id xrandr --output HDMI-1-0 --auto --right-of eDP-1
-exec_always --no-startup-id pactl set-default-sink alsa_output.pci-0000_01_00.1.hdmi-stereo 
+exec --no-startup-id xrandr --output DisplayPort-1 --mode 1920x1080 --rate 180 
+# exec_always --no-startup-id xrandr --output HDMI-1-0 --auto --right-of eDP-1
+exec_always --no-startup-id pactl set-default-sink alsa_output.pci-0000_03_00.1.hdmi-stereo  
 exec_always --no-startup-id polybar-msg cmd quit 
 exec_always --no-startup-id polybar main
-exec_always --no-startup-id polybar secondary
-exec_always --no-startup-id feh --bg-fill ~/Imagenes/wallpapers/wallpaper.jpg
+# exec_always --no-startup-id polybar secondary
+exec_always --no-startup-id feh --bg-fill ~/Imagenes/wallpapers/wallpaper48.png
 exec_always --no-startup-id picom
 exec_always --no-startup-id killall dunst
 exec_always --no-startup-id dunst
@@ -28,6 +28,7 @@ bindsym $mod+Shift+b exec ~/.config/i3/launch_i3lock.sh # Launch a own script of
 bindsym $mod+d exec ~/.config/rofi/launcher.sh
 bindsym $mod+Shift+s exec ~/.config/rofi/system_menu.sh
 bindsym $mod+Shift+a exec ~/.config/rofi/control_menu.sh
+bindsym $mod+Shift+p exec flameshot gui 
 # i3-gaps
 
 gaps inner 5

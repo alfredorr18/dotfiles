@@ -7,11 +7,15 @@ return {
   },
   {
     "williamboman/mason-lspconfig.nvim",
-    config = function()
-      require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "bashls", "pyright" }
-      })
-    end
+    lazy = false,
+    opts = {
+      auto_install = true,
+    },
+    -- config = function()
+    --   require("mason-lspconfig").setup({
+    --     ensure_installed = { "lua_ls", "bashls", "pyright", "biome"}
+    --   })
+    -- end
   },
   {
     "neovim/nvim-lspconfig",
@@ -25,6 +29,9 @@ return {
         capabilities = capabilities
       })
       lspconfig.pyright.setup({
+        capabilities = capabilities
+      })
+      lspconfig.ts_ls.setup({
         capabilities = capabilities
       })
 -- Añadimos unos cuantos atajos
